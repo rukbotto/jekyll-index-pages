@@ -16,4 +16,6 @@ Gem::Specification.new do |spec|
   DESCRIPTION
 
   spec.files = `git ls-files -z`.split("\x0").grep(/^(readme|license)/i)
+
+  spec.add_runtime_dependency("jekyll", "~> 3.3")
 end
