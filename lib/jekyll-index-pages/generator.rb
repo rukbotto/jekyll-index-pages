@@ -1,5 +1,5 @@
-module IndexPages
-  class IndexPageGenerator < Jekyll::Generator
+module JekyllIndexPages
+  class Generator < Jekyll::Generator
     safe true
 
     def generate(site)

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe(IndexPages::IndexPageGenerator) do
+describe(JekyllIndexPages::Generator) do
   let(:overrides) { Hash.new }
   let(:site_config) do
     Jekyll.configuration(Jekyll::Utils.deep_merge_hashes({
@@ -15,7 +15,7 @@ describe(IndexPages::IndexPageGenerator) do
   end
 
   context("When no configuration is provided") do
-    describe("IndexPageGenerator.generate") do
+    describe("Generator.generate") do
       it("skips index page generation") do
         expect(site.pages.length).to eq(0)
       end
@@ -31,7 +31,7 @@ describe(IndexPages::IndexPageGenerator) do
       }
     end
 
-    describe("IndexPageGenerator.generate") do
+    describe("Generator.generate") do
       it("generates a single post index page") do
         expect(site.pages.length).to eq(1)
       end
@@ -73,7 +73,7 @@ describe(IndexPages::IndexPageGenerator) do
       }
     end
 
-    describe("IndexPageGenerator.generate") do
+    describe("Generator.generate") do
       it("generates post index page with custom values") do
         expect(site.pages[0].data["title"]).to eq("Custom Title")
         expect(site.pages[0].data["excerpt"]).to eq("Custom excerpt")
@@ -92,7 +92,7 @@ describe(IndexPages::IndexPageGenerator) do
       }
     end
 
-    describe("IndexPageGenerator.generate") do
+    describe("Generator.generate") do
       it("generates a post index page with two documents") do
         expect(site.pages[0].data["docs"].length).to eq(2)
       end
@@ -114,7 +114,7 @@ describe(IndexPages::IndexPageGenerator) do
       }
     end
 
-    describe("IndexPageGenerator.generate") do
+    describe("Generator.generate") do
       it("generates a post index page at /custom-permalink/") do
         expect(site.pages[0].url).to eq("/custom-permalink/")
       end
@@ -132,7 +132,7 @@ describe(IndexPages::IndexPageGenerator) do
       }
     end
 
-    describe("IndexPageGenerator.generate") do
+    describe("Generator.generate") do
       it("generates a post index page using the custom layout") do
         expect(site.pages.length).to eq(1)
         expect(site.pages[0].content).to include("Custom Layout")
@@ -149,7 +149,7 @@ describe(IndexPages::IndexPageGenerator) do
       }
     end
 
-    describe("IndexPageGenerator.generate") do
+    describe("Generator.generate") do
       it("generates a single category index page") do
         expect(site.pages.length).to eq(1)
       end
@@ -169,7 +169,7 @@ describe(IndexPages::IndexPageGenerator) do
       }
     end
 
-    describe("IndexPageGenerator.generate") do
+    describe("Generator.generate") do
       it("generates a single tag index page") do
         expect(site.pages.length).to eq(1)
       end

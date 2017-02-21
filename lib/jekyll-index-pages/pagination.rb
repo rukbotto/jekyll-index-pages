@@ -1,4 +1,4 @@
-module IndexPages
+module JekyllIndexPages
   class Pagination
     Pager = Struct.new(
       :docs,

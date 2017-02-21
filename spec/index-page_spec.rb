@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe(IndexPages::IndexPage) do
+describe(JekyllIndexPages::IndexPage) do
   let(:site_config) do
     Jekyll.configuration({
       "source" => File.expand_path("../fixtures/index-page", __FILE__),
@@ -13,7 +13,7 @@ describe(IndexPages::IndexPage) do
   let(:label) { "posts" }
   let(:layout) { "default" }
   let(:pager) do
-    pagination = IndexPages::Pagination.new(site.posts.docs.reverse, 2)
+    pagination = JekyllIndexPages::Pagination.new(site.posts.docs.reverse, 2)
     pagination.paginate(0)
     pagination.pager
   end
@@ -25,7 +25,15 @@ describe(IndexPages::IndexPage) do
   context("When no configuration is provided") do
     let(:config) { {} }
     let(:page) do
-      IndexPages::IndexPage.new(site, base, dir, config, label, layout, pager)
+      JekyllIndexPages::IndexPage.new(
+        site,
+        base,
+        dir,
+        config,
+        label,
+        layout,
+        pager
+      )
     end
     let(:docs) { page.data["docs"] }
 
@@ -55,7 +63,15 @@ describe(IndexPages::IndexPage) do
       }
     end
     let(:page) do
-      IndexPages::IndexPage.new(site, base, dir, config, label, layout, pager)
+      JekyllIndexPages::IndexPage.new(
+        site,
+        base,
+        dir,
+        config,
+        label,
+        layout,
+        pager
+      )
     end
     let(:docs) { page.data["docs"] }
 

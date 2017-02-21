@@ -1,3 +1,3 @@
-module IndexPages
+module JekyllIndexPages
   VERSION = "0.0.4"
 end

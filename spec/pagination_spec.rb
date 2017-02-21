@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe(IndexPages::Pagination) do
+describe(JekyllIndexPages::Pagination) do
   context "When no documents and no results per page are provided" do
-    let(:pagination) { IndexPages::Pagination.new([], 0) }
+    let(:pagination) { JekyllIndexPages::Pagination.new([], 0) }
     let(:pager) { pagination.pager }
 
     describe "Pagination.initialize" do
@@ -13,7 +13,7 @@ describe(IndexPages::Pagination) do
   end
 
   context "When two documents and one result per page are provided" do
-    let(:pagination) { IndexPages::Pagination.new([true, true], 1) }
+    let(:pagination) { JekyllIndexPages::Pagination.new([true, true], 1) }
     let(:pager) { pagination.pager }
 
     before(:each) do
@@ -38,7 +38,7 @@ describe(IndexPages::Pagination) do
   end
 
   context "When two documents and two result per page are provided" do
-    let(:pagination) { IndexPages::Pagination.new([true, true], 2) }
+    let(:pagination) { JekyllIndexPages::Pagination.new([true, true], 2) }
     let(:pager) { pagination.pager }
 
     before(:each) do

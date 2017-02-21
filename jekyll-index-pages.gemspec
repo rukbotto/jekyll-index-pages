@@ -2,7 +2,7 @@ require File.expand_path("../lib/jekyll-index-pages/version", __FILE__)
 
 Gem::Specification.new do |spec|
   spec.name       = "jekyll-index-pages"
-  spec.version    = IndexPages::VERSION
+  spec.version    = JekyllIndexPages::VERSION
   spec.date       = "2017-02-16"
   spec.author     = ["Jose Miguel Venegas Mendoza"]
   spec.email      = ["jvenegasmendoza@gmail.com"]

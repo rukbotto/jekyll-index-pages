@@ -1,4 +1,4 @@
-module IndexPages
+module JekyllIndexPages
   class IndexPage < Jekyll::Page
     def initialize(site, base, dir, config, label, layout, pager)
       @site = site
