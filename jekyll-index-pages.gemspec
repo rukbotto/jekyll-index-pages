@@ -15,7 +15,10 @@ Gem::Specification.new do |spec|
     and collections. It also let you generate a paginated blog post archive.
   DESCRIPTION
 
-  spec.files = `git ls-files -z`.split("\x0").grep(/^(readme|license)/i)
+  spec.files = `git ls-files -z`.split("\x0").grep(/^(readme|license|spec)/i)
 
   spec.add_runtime_dependency("jekyll", "~> 3.3")
+
+  spec.add_development_dependency("bundler", "~> 1.14")
+  spec.add_development_dependency("rspec", "~> 3.5")
 end
