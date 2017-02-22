@@ -29,10 +29,12 @@ module JekyllIndexPages
           (0...pagination.total).each do |current|
             pagination.paginate(current)
 
+            pager = pagination.pager
+
             dir =
               File.join(
                 permalink.sub(":label", Jekyll::Utils.slugify(label)),
-                (current > 0) ? pagination.pager.current_page : ""
+                (pager.current_page > 1) ? pager.current_page.to_s : ""
               )
 
             site.pages <<
@@ -43,7 +45,7 @@ module JekyllIndexPages
                 item,
                 label,
                 layout,
-                pagination.pager
+                pager
               )
           end
         end

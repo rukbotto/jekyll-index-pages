@@ -98,7 +98,7 @@ describe(JekyllIndexPages::Generator) do
       end
 
       it("generates three post index pages") do
-        expect(site.pages[0].data["pager"]["total_pages"]).to eq("3")
+        expect(site.pages[0].data["pager"]["total_pages"]).to eq(3)
       end
     end
   end

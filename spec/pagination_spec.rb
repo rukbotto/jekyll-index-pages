@@ -29,10 +29,10 @@ describe(JekyllIndexPages::Pagination) do
     describe "Pagination.paginate" do
       it "creates a pager object with two pages, one document each" do
         expect(pager.docs.length).to eq(1)
-        expect(pager.total_pages).to eq("2")
-        expect(pager.current_page).to eq("1")
-        expect(pager.prev_page).to eq("")
-        expect(pager.next_page).to eq("2")
+        expect(pager.total_pages).to eq(2)
+        expect(pager.current_page).to eq(1)
+        expect(pager.prev_page).to eq(0)
+        expect(pager.next_page).to eq(2)
       end
     end
   end
@@ -48,10 +48,10 @@ describe(JekyllIndexPages::Pagination) do
     describe "Pagination.paginate" do
       it "creates a pager object with a single two document page" do
         expect(pager.docs.length).to eq(2)
-        expect(pager.total_pages).to eq("1")
-        expect(pager.current_page).to eq("1")
-        expect(pager.prev_page).to eq("")
-        expect(pager.next_page).to eq("")
+        expect(pager.total_pages).to eq(1)
+        expect(pager.current_page).to eq(1)
+        expect(pager.prev_page).to eq(0)
+        expect(pager.next_page).to eq(0)
       end
     end
   end
