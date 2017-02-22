@@ -16,10 +16,10 @@ Gem::Specification.new do |spec|
     and collections. It also let you generate a paginated blog post archive.
   DESCRIPTION
 
-  spec.files = `git ls-files`.split("\n")
-  spec.executables  = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  spec.files          = `git ls-files`.split("\n")
+  spec.executables    = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files     = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths  = ["lib"]
 
   spec.add_dependency("jekyll", "~> 3.3")
 
