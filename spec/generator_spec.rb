@@ -46,12 +46,12 @@ describe(JekyllIndexPages::Generator) do
       end
 
       it("generates a post index page with five documents") do
-        expect(site.pages[0].data["docs"].length).to eq(5)
+        expect(site.pages[0].data["pager"]["docs"].length).to eq(5)
       end
 
       it("generates a post index page with recent documents first") do
-        recent_doc = site.pages[0].data["docs"][0]
-        older_doc = site.pages[0].data["docs"][1]
+        recent_doc = site.pages[0].data["pager"]["docs"][0]
+        older_doc = site.pages[0].data["pager"]["docs"][1]
         expect(recent_doc.date).to be > older_doc.date
       end
 
@@ -93,12 +93,35 @@ describe(JekyllIndexPages::Generator) do
     end
 
     describe("Generator.generate") do
-      it("generates a post index page with two documents") do
-        expect(site.pages[0].data["docs"].length).to eq(2)
+      context("generates the first post index page") do
+        let(:page) { site.pages[0] }
+
+        it("with two documents") do
+          expect(page.data["pager"]["docs"].length).to eq(2)
+        end
+
+        it("and next page url only") do
+          expect(page.data["pager"]["prev_page_url"]).to eq("")
+          expect(page.data["pager"]["next_page_url"]).to eq("/posts/2/")
+        end
       end
 
-      it("generates three post index pages") do
-        expect(site.pages[0].data["pager"]["total_pages"]).to eq(3)
+      context("generates the second post index page") do
+        let(:page) { site.pages[1] }
+
+        it("with previous and next page urls") do
+          expect(page.data["pager"]["prev_page_url"]).to eq("/posts/1/")
+          expect(page.data["pager"]["next_page_url"]).to eq("/posts/3/")
+        end
+      end
+
+      context("generates the third post index page") do
+        let(:page) { site.pages[2] }
+
+        it("with previous page url only") do
+          expect(page.data["pager"]["prev_page_url"]).to eq("/posts/2/")
+          expect(page.data["pager"]["next_page_url"]).to eq("")
+        end
       end
     end
   end

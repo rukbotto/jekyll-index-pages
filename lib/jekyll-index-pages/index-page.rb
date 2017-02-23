@@ -14,13 +14,25 @@ module JekyllIndexPages
 
       self.data["title"] = title.sub(":label", label)
       self.data["excerpt"] = excerpt.sub(":label", label)
-      self.data["docs"] = pager.docs.sort { |x, y| y.date <=> x.date }
 
-      self.data["pager"] = Hash.new { |hash, key| hash[key] = "" }
+      self.data["pager"] = Hash.new
+      self.data["pager"]["docs"] = pager.docs.sort { |x, y| y.date <=> x.date }
       self.data["pager"]["total_pages"] = pager.total_pages
       self.data["pager"]["current_page"] = pager.current_page
       self.data["pager"]["prev_page"] = pager.prev_page
       self.data["pager"]["next_page"] = pager.next_page
+      self.data["pager"]["prev_page_url"] =
+        if (pager.prev_page > 0)
+          File.join(dir.sub(%r{/\d+}, ""), pager.prev_page.to_s << "/")
+        else
+          ""
+        end
+      self.data["pager"]["next_page_url"] =
+        if (pager.next_page > 0)
+          File.join(dir.sub(%r{/\d+}, ""), pager.next_page.to_s << "/")
+        else
+          ""
+        end
     end
   end
 end

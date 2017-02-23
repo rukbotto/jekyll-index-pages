@@ -12,10 +12,20 @@ describe(JekyllIndexPages::IndexPage) do
   let(:dir) { "/posts/" }
   let(:label) { "posts" }
   let(:layout) { "default" }
-  let(:pager) do
-    pagination = JekyllIndexPages::Pagination.new(site.posts.docs.reverse, 2)
-    pagination.paginate(0)
-    pagination.pager
+  let(:pagination) do
+    JekyllIndexPages::Pagination.new(site.posts.docs.reverse, 2)
+  end
+  let(:pager) { pagination.pager }
+  let(:page) do
+    JekyllIndexPages::IndexPage.new(
+      site,
+      base,
+      dir,
+      config,
+      label,
+      layout,
+      pager
+    )
   end
 
   before(:each) do
@@ -24,32 +34,59 @@ describe(JekyllIndexPages::IndexPage) do
 
   context("When no configuration is provided") do
     let(:config) { {} }
-    let(:page) do
-      JekyllIndexPages::IndexPage.new(
-        site,
-        base,
-        dir,
-        config,
-        label,
-        layout,
-        pager
-      )
-    end
-    let(:docs) { page.data["docs"] }
 
     describe("IndexPage.initialize") do
-      describe("creates the first index page") do
-        it("with default values") do
+      context("creates the first index page") do
+        let(:pager) do
+          pagination.paginate(0)
+          pagination.pager
+        end
+
+        it("with default title and excerpt") do
           expect(page.data["title"]).to eq("posts")
           expect(page.data["excerpt"]).to eq("posts")
         end
 
         it("listing the first two posts") do
-          expect(docs.length).to eq(2)
+          expect(page.data["pager"]["docs"].length).to eq(2)
         end
 
-        it("with a pager") do
-          expect(page.data["pager"]).to be_instance_of(Hash)
+        it("containing pagination data") do
+          expect(page.data["pager"]["total_pages"]).to eq(3)
+          expect(page.data["pager"]["current_page"]).to eq(1)
+          expect(page.data["pager"]["prev_page"]).to eq(0)
+          expect(page.data["pager"]["next_page"]).to eq(2)
+        end
+
+        it("and url for next page only") do
+          expect(page.data["pager"]["prev_page_url"]).to eq("")
+          expect(page.data["pager"]["next_page_url"]).to eq("/posts/2/")
+        end
+      end
+
+      context("creates the second index page") do
+        let(:dir) { "/posts/2" }
+        let(:pager) do
+          pagination.paginate(1)
+          pagination.pager
+        end
+
+        it("containing urls for previous and next pages") do
+          expect(page.data["pager"]["prev_page_url"]).to eq("/posts/1/")
+          expect(page.data["pager"]["next_page_url"]).to eq("/posts/3/")
+        end
+      end
+
+      context("creates the third index page") do
+        let(:dir) { "/posts/3" }
+        let(:pager) do
+          pagination.paginate(2)
+          pagination.pager
+        end
+
+        it("containing url for prev page only") do
+          expect(page.data["pager"]["prev_page_url"]).to eq("/posts/2/")
+          expect(page.data["pager"]["next_page_url"]).to eq("")
         end
       end
     end
@@ -62,21 +99,9 @@ describe(JekyllIndexPages::IndexPage) do
         "excerpt" => "Star Trek Index"
       }
     end
-    let(:page) do
-      JekyllIndexPages::IndexPage.new(
-        site,
-        base,
-        dir,
-        config,
-        label,
-        layout,
-        pager
-      )
-    end
-    let(:docs) { page.data["docs"] }
 
     describe("IndexPage.initialize") do
-      it("creates the first index page with custom values") do
+      it("creates the first index page with custom title and excerpt") do
         expect(page.data["title"]).to eq("Star Trek Index")
         expect(page.data["excerpt"]).to eq("Star Trek Index")
       end

@@ -6,9 +6,22 @@
     <meta name="description" content="{{ page.excerpt | strip_html }}">
   </head>
   <body>
+    {% assign pager = page.pager %}
+
     <h1>{{ page.title }}</h1>
-    {% for doc in page.docs %}
-    <h2>{{ doc.title }}</h2>
+
+    {% for doc in pager.docs %}
+      <h2>{{ doc.title }}</h2>
     {% endfor%}
+
+    {% if pager.total_pages > 1 %}
+      {% if pager.prev_page > 0 %}
+        <a href="{{ pager.prev_page_url }}">Prev. page</a>
+      {% endif %}
+      <span>Page {{ pager.current_page }} of {{ pager.total_pages }}</span>
+      {% if pager.next_page > 0 %}
+        <a href="{{ pager.next_page_url }}">Next page</a>
+      {% endif %}
+    {% endif %}
   </body>
 </html>
