@@ -46,50 +46,50 @@ using the layout named `_layouts/blog.html`. Each index page will contain up to
 20 posts. First page can be accessed at `/blog/`. Subsequent pages can be
 accessed at `/blog/<page-num>/`.
 
+If you want to generate index pages for categories, add the `categories`
+setting to `index_page` section:
+
+```yaml
+index_pages:
+  categories:
+    ...
+```
+
+The same reasoning applies if you want to generate index pages for tags:
+
+```yaml
+index_pages:
+  tags:
+    ...
+```
+
 Default values for each setting are:
 
 ```yaml
 index_pages:
   posts:
-    title: posts
-    excerpt: posts
+    title: :label
+    excerpt: :label
     per_page: 10
-    permalink: /posts/
+    permalink: /:label/
     layout: posts
-```
-
-If you want to generate index pages for categories, add the `categories`
-setting to `index_page` section:
-
-```yaml
-# Displaying default values
-index_pages:
   categories:
-    title: categories
-    excerpt: categories
+    title: :label
+    excerpt: :label
     per_page: 10
-    permalink: /categories/
+    permalink: /:label/
     layout: categories
-```
-
-Given the default values above, categories index pages can be accessed at
-`/categories/<category-name-slug>/`.
-
-The same reasoning applies if you want to generate index pages for tags:
-
-```yaml
-# Displaying default values
-index_pages:
   tags:
-    title: tags
-    excerpt: tags
+    title: :label
+    excerpt: :label
     per_page: 10
-    permalink: /tags/
+    permalink: /:label/
     layout: tags
 ```
 
-Given the default values above, tags index pages can be accessed at
-`/tags/<tag-name-slug>/`.
+For categories and tags, `:label` variable refers to the category or tag name.
+For posts, `:label` will always be equal to `post`. `:label` value is slugified
+when composing the permalink.
 
 ### Including documents and pagination into templates
 
