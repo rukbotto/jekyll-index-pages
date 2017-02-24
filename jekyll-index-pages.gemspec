@@ -12,8 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary      = "Index page generator for Jekyll sites."
   spec.description  = <<-DESCRIPTION
-    Generates paginated index pages for blog posts, categories, tags, authors
-    and collections. It also let you generate a paginated blog post archive.
+    Generates paginated index pages for blog posts, categories and tags.
   DESCRIPTION
 
   spec.files          = `git ls-files`.split("\n")
