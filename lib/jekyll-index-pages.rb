@@ -1,4 +1,5 @@
 require "jekyll"
+require "jekyll-index-pages/archive"
 require "jekyll-index-pages/generator"
 
 module JekyllIndexPages

@@ -202,4 +202,24 @@ describe(JekyllIndexPages::Generator) do
       end
     end
   end
+
+  context("When default settings for archive index pages is provided") do
+    let(:overrides) do
+      {
+        "index_pages" => {
+          "archive" => {}
+        }
+      }
+    end
+
+    describe("Generator.generate") do
+      it("generates five archive index pages") do
+        expect(site.pages.length).to eq(5)
+      end
+
+      it("generates the first archive index page at /1966/") do
+        expect(site.pages[0].url).to eq("/1966/")
+      end
+    end
+  end
 end

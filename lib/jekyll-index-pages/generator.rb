@@ -19,6 +19,8 @@ module JekyllIndexPages
             site.categories
           when "tags"
             site.tags
+          when "archive"
+            site.data["archive"]
           else
             {}
           end

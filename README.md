@@ -1,7 +1,7 @@
 # Jekyll Index Pages
 
 Index page generator for Jekyll sites. Generates paginated index pages for blog
-posts, categories and tags.
+posts, categories and tags. It can also generate a yearly archive.
 
 ## Installation
 
@@ -63,6 +63,14 @@ index_pages:
     ...
 ```
 
+If you want to generate the yearly archive, just add the following:
+
+```yaml
+index_pages:
+  archive:
+    ...
+```
+
 Default values for each setting are:
 
 ```yaml
@@ -85,11 +93,17 @@ index_pages:
     per_page: 10
     permalink: /:label/
     layout: tags
+  archive:
+    title: :label
+    excerpt: :label
+    per_page: 10
+    permalink: /:label/
+    layout: archive
 ```
 
 For categories and tags, `:label` variable refers to the category or tag name.
-For posts, `:label` will always be equal to `post`. `:label` value is slugified
-when composing the permalink.
+For posts, `:label` will always be equal to `post`. For the archive, `:label`
+refers to the year. `:label` value is slugified when composing the permalink.
 
 ### Including documents and pagination into templates
 
