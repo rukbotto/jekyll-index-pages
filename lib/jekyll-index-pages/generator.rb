@@ -21,6 +21,8 @@ module JekyllIndexPages
             site.tags
           when "archive"
             site.data["archive"]
+          when "authors"
+            site.data["authors"]
           else
             {}
           end

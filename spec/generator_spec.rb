@@ -222,4 +222,24 @@ describe(JekyllIndexPages::Generator) do
       end
     end
   end
+
+  context("When default settings for author index pages is provided") do
+    let(:overrides) do
+      {
+        "index_pages" => {
+          "authors" => {}
+        }
+      }
+    end
+
+    describe("Generator.generate") do
+      it("generates five archive index pages") do
+        expect(site.pages.length).to eq(5)
+      end
+
+      it("generates the first archive index page at /james-t-kirk/") do
+        expect(site.pages[0].url).to eq("/james-t-kirk/")
+      end
+    end
+  end
 end
