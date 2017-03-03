@@ -71,6 +71,14 @@ index_pages:
     ...
 ```
 
+Finally, if you want to generate author pages, you can include the following:
+
+```yaml
+index_pages:
+  authors:
+    ...
+```
+
 Default values for each setting are:
 
 ```yaml
@@ -99,11 +107,18 @@ index_pages:
     per_page: 10
     permalink: /:label/
     layout: archive
+  authors:
+    title: :label
+    excerpt: :label
+    per_page: 10
+    permalink: /:label/
+    layout: authors
 ```
 
 For categories and tags, `:label` variable refers to the category or tag name.
 For posts, `:label` will always be equal to `post`. For the archive, `:label`
-refers to the year. `:label` value is slugified when composing the permalink.
+refers to the year. For authors, `:label` is the author name. `:label` value is
+slugified when composing the permalink.
 
 ### Including documents and pagination into templates
 
