@@ -8,6 +8,7 @@ module JekyllIndexPages
         permalink = item["permalink"] || "/:label/"
         per_page = item['per_page'] || 10
         layout = item["layout"] || "#{kind}"
+        collection = item["collection"]
 
         next if !site.layouts.key? layout
 
@@ -24,7 +25,7 @@ module JekyllIndexPages
           when "authors"
             site.data["authors"]
           else
-            {}
+            site.data["collectionz"] if collection
           end
 
         doc_group.each do |label, docs|

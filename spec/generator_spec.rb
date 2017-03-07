@@ -242,4 +242,28 @@ describe(JekyllIndexPages::Generator) do
       end
     end
   end
+
+  context("When default settings for collection index pages is provided") do
+    let(:overrides) do
+      {
+        "collections" => ["starships"],
+        "index_pages" => {
+          "custom" => {
+            "layout" => "custom-layout",
+            "collection" => "starships"
+          }
+        }
+      }
+    end
+
+    describe("Generator.generate") do
+      it("generates a single collection index page") do
+        expect(site.pages.length).to eq(1)
+      end
+
+      it("generates the first collection index page at /starships/") do
+        expect(site.pages[0].url).to eq("/starships/")
+      end
+    end
+  end
 end
