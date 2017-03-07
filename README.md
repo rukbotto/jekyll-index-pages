@@ -1,8 +1,8 @@
 # Jekyll Index Pages
 
 Index page generator for Jekyll sites. Generates paginated index pages for blog
-posts, categories and tags. It can also generate a yearly archive and author
-pages.
+posts, categories and tags. It can also generate a paginated yearly archive,
+author and collection pages.
 
 ## Installation
 
@@ -64,7 +64,7 @@ index_pages:
     ...
 ```
 
-If you want to generate the yearly archive, just add the following:
+Yearly archive:
 
 ```yaml
 index_pages:
@@ -72,54 +72,48 @@ index_pages:
     ...
 ```
 
-Finally, if you want to generate author pages, you can include the following:
+And author pages:
 
 ```yaml
 index_pages:
   authors:
+    ...
+```
+
+For collection index pages, you need to include the collection name:
+
+```yaml
+index_pages:
+  custom_name:
+    collection: collection_name
     ...
 ```
 
 Default values for each setting are:
 
 ```yaml
-index_pages:
-  posts:
-    title: :label
-    excerpt: :label
-    per_page: 10
-    permalink: /:label/
-    layout: posts
-  categories:
-    title: :label
-    excerpt: :label
-    per_page: 10
-    permalink: /:label/
-    layout: categories
-  tags:
-    title: :label
-    excerpt: :label
-    per_page: 10
-    permalink: /:label/
-    layout: tags
-  archive:
-    title: :label
-    excerpt: :label
-    per_page: 10
-    permalink: /:label/
-    layout: archive
-  authors:
-    title: :label
-    excerpt: :label
-    per_page: 10
-    permalink: /:label/
-    layout: authors
+title: :label
+excerpt: :label
+per_page: 10
+permalink: /:label/
+layout: posts|categories|tags|authors|archive
 ```
 
 For categories and tags, `:label` variable refers to the category or tag name.
 For posts, `:label` will always be equal to `post`. For the archive, `:label`
-refers to the year. For authors, `:label` is the author name. `:label` value is
-slugified when composing the permalink.
+refers to any given year. For authors, `:label` is the author name. `:label`
+value is slugified when composing the permalink.
+
+Default value for layout depends on the type of index page. For collection
+index pages, the default layout is the same as the custon name used to define the
+collection config:
+
+```yaml
+custom_name:
+  layout: custom_name
+  collection: collection_name
+  ...
+```
 
 ### Including documents and pagination into templates
 
