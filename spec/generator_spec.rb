@@ -163,7 +163,7 @@ describe(JekyllIndexPages::Generator) do
     end
   end
 
-  context("When default settings for category index pages is provided") do
+  context("When default configuration for category index pages is provided") do
     let(:overrides) do
       {
         "index_pages" => {
@@ -183,7 +183,7 @@ describe(JekyllIndexPages::Generator) do
     end
   end
 
-  context("When default settings for tag index pages is provided") do
+  context("When default configuration for tag index pages is provided") do
     let(:overrides) do
       {
         "index_pages" => {
@@ -203,7 +203,7 @@ describe(JekyllIndexPages::Generator) do
     end
   end
 
-  context("When default settings for archive index pages is provided") do
+  context("When default configuration for archive index pages is provided") do
     let(:overrides) do
       {
         "index_pages" => {
@@ -223,7 +223,7 @@ describe(JekyllIndexPages::Generator) do
     end
   end
 
-  context("When default settings for author index pages is provided") do
+  context("When default configuration for author index pages is provided") do
     let(:overrides) do
       {
         "index_pages" => {
@@ -233,17 +233,17 @@ describe(JekyllIndexPages::Generator) do
     end
 
     describe("Generator.generate") do
-      it("generates five archive index pages") do
+      it("generates five author index pages") do
         expect(site.pages.length).to eq(5)
       end
 
-      it("generates the first archive index page at /james-t-kirk/") do
+      it("generates the first author index page at /james-t-kirk/") do
         expect(site.pages[0].url).to eq("/james-t-kirk/")
       end
     end
   end
 
-  context("When default settings for collection index pages is provided") do
+  context("When default configuration for collection index pages is provided") do
     let(:overrides) do
       {
         "collections" => ["starships"],

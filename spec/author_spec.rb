@@ -16,7 +16,7 @@ describe(JekyllIndexPages::Author) do
 
   context("When no configuration is provided") do
     describe("Author.generate") do
-      it("skips posts by author generation") do
+      it("skips author index page generation") do
         expect(site.data["author"]).to be_nil
       end
     end
@@ -32,7 +32,7 @@ describe(JekyllIndexPages::Author) do
     end
 
     describe("Author.generate") do
-      it("generates five posts-by-author pages") do
+      it("generates five author index pages") do
         expect(site.data["authors"].length).to eq(5)
       end
 
