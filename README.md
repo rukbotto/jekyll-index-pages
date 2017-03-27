@@ -1,24 +1,32 @@
 # Jekyll Index Pages
 
+[![Build Status](https://travis-ci.org/rukbotto/jekyll-index-pages.svg?branch=master)](https://travis-ci.org/rukbotto/jekyll-index-pages)
+
 Index page generator for Jekyll sites. Generates paginated index pages for blog
 posts, categories and tags. It can also generate a paginated yearly archive,
 author and collection pages.
 
 ## Installation
 
-To perform a manual install, execute this command on your terminal:
-
-```sh
-$ gem install jekyll-index-pages
-```
-
-Or, if you happen to use Bundler, add this line to your Gemfile:
+Add this line to your Gemfile:
 
 ```ruby
 gem "jekyll-index-pages"
 ```
 
-Then add the gem to the `gems` setting in your `_config.yml` file:
+And then execute:
+
+```sh
+$ bundle
+```
+
+Or install it yourself as:
+
+```sh
+$ gem install jekyll-index-pages
+```
+
+Finally add this line to `gems` setting in your `_config.yml` file:
 
 ```yaml
 gems:
@@ -149,10 +157,24 @@ To include the pagination, you can do the following:
 {% endif %}
 ```
 
+## Development
+
+After checking out the repo, run `script/setup` to install dependencies. Then,
+run `rake spec` to run the tests. You can also run `script/console` for an
+interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To
+release a new version, update the version number in `version.rb`, and then run
+`bundle exec rake release`, which will create a git tag for the version, push
+git commits and tags, and push the `.gem` file to
+[rubygems.org](https://rubygems.org).
+
 ## Contributing
 
-1. Fork it (https://github.com/rukbotto/jekyll-index-pages/fork)
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create a new Pull Request
+Bug reports and pull requests are welcome on GitHub at
+https://github.com/rukbotto/jekyll-index-pages.
+
+## License
+
+The gem is available as open source under the terms of the [MIT
+License](http://opensource.org/licenses/MIT).
