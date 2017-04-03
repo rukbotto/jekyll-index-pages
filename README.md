@@ -151,7 +151,7 @@ To include the pagination, you can do the following:
   <a href="{{ pager.prev_page_url }}">Prev. page</a>
   {% endif %}
   <span>Page {{ pager.current_page }} of {{ pager.total_pages }}</span>
-  {% if next_page > 0 %}
+  {% if pager.next_page > 0 %}
   <a href="{{ pager.next_page_url }}">Next page</a>
   {% endif %}
 {% endif %}
