@@ -6,11 +6,20 @@ module JekyllIndexPages
       @dir = dir
       @name = "index.html"
 
+      layout_dir = "_layouts"
+      layout_name = "#{layout}.html"
+
+      @path = if site.in_theme_dir(base) == base
+                site.in_theme_dir(base, layout_dir, layout_name)
+              else
+                site.in_source_dir(base, layout_dir, layout_name)
+              end
+
       title = config["title"] || ":label"
       excerpt = config["excerpt"] || ":label"
 
       self.process(@name)
-      self.read_yaml(File.join(base, "_layouts"), "#{layout}.html")
+      self.read_yaml(File.join(base, layout_dir), layout_name)
 
       self.data["title"] = title.sub(":label", label)
       self.data["excerpt"] = excerpt.sub(":label", label)

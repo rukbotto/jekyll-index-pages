@@ -42,16 +42,14 @@ module JekyllIndexPages
                 (pager.current_page > 1) ? pager.current_page.to_s : ""
               )
 
+            base = if site.in_theme_dir()
+                     site.in_theme_dir()
+                   else
+                     site.in_source_dir()
+                   end
+
             site.pages <<
-              IndexPage.new(
-                site,
-                site.source,
-                dir,
-                item,
-                label,
-                layout,
-                pager
-              )
+              IndexPage.new(site, base, dir, item, label, layout, pager)
           end
         end
       end
