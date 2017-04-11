@@ -31,7 +31,9 @@ module JekyllIndexPages
       self.data["pager"]["prev_page"] = pager.prev_page
       self.data["pager"]["next_page"] = pager.next_page
       self.data["pager"]["prev_page_url"] =
-        if (pager.prev_page > 0)
+        if (pager.prev_page == 1)
+          File.join(dir.sub(%r{/\d+}, ""), "/")
+        elsif (pager.prev_page > 1)
           File.join(dir.sub(%r{/\d+}, ""), pager.prev_page.to_s << "/")
         else
           ""

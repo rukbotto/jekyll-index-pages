@@ -110,7 +110,7 @@ describe(JekyllIndexPages::Generator) do
         let(:page) { site.pages[1] }
 
         it("with previous and next page urls") do
-          expect(page.data["pager"]["prev_page_url"]).to eq("/posts/1/")
+          expect(page.data["pager"]["prev_page_url"]).to eq("/posts/")
           expect(page.data["pager"]["next_page_url"]).to eq("/posts/3/")
         end
       end
