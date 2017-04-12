@@ -9,11 +9,12 @@ module JekyllIndexPages
       layout_dir = "_layouts"
       layout_name = "#{layout}.html"
 
-      @path = if site.in_theme_dir(base) == base
-                site.in_theme_dir(base, layout_dir, layout_name)
-              else
-                site.in_source_dir(base, layout_dir, layout_name)
-              end
+      @path =
+        if site.in_theme_dir(base) == base
+          site.in_theme_dir(base, layout_dir, layout_name)
+        else
+          site.in_source_dir(base, layout_dir, layout_name)
+        end
 
       title = config["title"] || ":label"
       excerpt = config["excerpt"] || ":label"

@@ -8,6 +8,4 @@ require "jekyll-index-pages/generator"
 module JekyllIndexPages
   autoload :Pagination, "jekyll-index-pages/pagination"
   autoload :IndexPage, "jekyll-index-pages/index-page"
-
-  I18n.available_locales = [:en]
 end

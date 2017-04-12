@@ -113,8 +113,8 @@ refers to any given year. For authors, `:label` is the author name. `:label`
 value is slugified when composing the permalink.
 
 Default value for layout depends on the type of index page. For collection
-index pages, the default layout is the same as the custon name used to define the
-collection config:
+index pages, the default layout is the same as the custon name used to define
+the collection config:
 
 ```yaml
 custom_name:
@@ -122,6 +122,17 @@ custom_name:
   collection: collection_name
   ...
 ```
+
+Beacuse this plugin [transliterates](http://stackoverflow.com/a/20586777) the
+URL for generated pages, you need to define a language as follows:
+
+```yaml
+lang: en-US
+```
+
+Then get the specified locale file from
+https://github.com/svenfuchs/rails-i18n/tree/master/rails/locale and add it to
+the `_locales/` directory inside your site codebase.
 
 ### Including documents and pagination into templates
 
