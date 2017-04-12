@@ -45,8 +45,8 @@ describe(JekyllIndexPages::Generator) do
         expect(site.pages[0].url).to eq("/posts/")
       end
 
-      it("generates a post index page with five documents") do
-        expect(site.pages[0].data["pager"]["docs"].length).to eq(5)
+      it("generates a post index page with six documents") do
+        expect(site.pages[0].data["pager"]["docs"].length).to eq(6)
       end
 
       it("generates a post index page with recent documents first") do
@@ -173,12 +173,16 @@ describe(JekyllIndexPages::Generator) do
     end
 
     describe("Generator.generate") do
-      it("generates a single category index page") do
-        expect(site.pages.length).to eq(1)
+      it("generates two category index pages") do
+        expect(site.pages.length).to eq(2)
       end
 
       it("generates a category index page at /science-fiction/") do
         expect(site.pages[0].url).to eq("/science-fiction/")
+      end
+
+      it("generates a category index page at /ciencia-ficcion/") do
+        expect(site.pages[1].url).to eq("/ciencia-ficcion/")
       end
     end
   end
@@ -193,8 +197,8 @@ describe(JekyllIndexPages::Generator) do
     end
 
     describe("Generator.generate") do
-      it("generates a single tag index page") do
-        expect(site.pages.length).to eq(1)
+      it("generates two tag index pages") do
+        expect(site.pages.length).to eq(2)
       end
 
       it("generates a tag index page at /star-trek/") do

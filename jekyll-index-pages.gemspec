@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.test_files     = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths  = ["lib"]
 
+  spec.add_dependency("i18n", "~> 0.8")
   spec.add_dependency("jekyll", "~> 3.3")
 
   spec.add_development_dependency("bundler", "~> 1.14")

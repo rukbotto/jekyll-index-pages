@@ -36,12 +36,12 @@ describe(JekyllIndexPages::Archive) do
         expect(site.data["archive"].length).to eq(5)
       end
 
-      it("each year containing only one post") do
-        expect(site.data["archive"]["1966"].length).to eq(1)
-        expect(site.data["archive"]["1987"].length).to eq(1)
-        expect(site.data["archive"]["1993"].length).to eq(1)
-        expect(site.data["archive"]["1995"].length).to eq(1)
-        expect(site.data["archive"]["2001"].length).to eq(1)
+      it("generates a post listing page per year") do
+        expect(site.data["archive"]["1966"].length).to be > 0
+        expect(site.data["archive"]["1987"].length).to be > 0
+        expect(site.data["archive"]["1993"].length).to be > 0
+        expect(site.data["archive"]["1995"].length).to be > 0
+        expect(site.data["archive"]["2001"].length).to be > 0
       end
     end
   end

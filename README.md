@@ -108,7 +108,7 @@ layout: posts|categories|tags|authors|archive
 ```
 
 For categories and tags, `:label` variable refers to the category or tag name.
-For posts, `:label` will always be equal to `post`. For the archive, `:label`
+For posts, `:label` will always be equal to `posts`. For the archive, `:label`
 refers to any given year. For authors, `:label` is the author name. `:label`
 value is slugified when composing the permalink.
 

@@ -36,12 +36,12 @@ describe(JekyllIndexPages::Author) do
         expect(site.data["authors"].length).to eq(5)
       end
 
-      it("each page containing only one post") do
-        expect(site.data["authors"]["James T Kirk"].length).to eq(1)
-        expect(site.data["authors"]["Jean-Luc Picard"].length).to eq(1)
-        expect(site.data["authors"]["Benjamin Sisko"].length).to eq(1)
-        expect(site.data["authors"]["Kathryn Janeway"].length).to eq(1)
-        expect(site.data["authors"]["Jonathan Archer"].length).to eq(1)
+      it("generates a post listing page per author") do
+        expect(site.data["authors"]["James T Kirk"].length).to be > 0
+        expect(site.data["authors"]["Jean-Luc Picard"].length).to be > 0
+        expect(site.data["authors"]["Benjamin Sisko"].length).to be > 0
+        expect(site.data["authors"]["Kathryn Janeway"].length).to be > 0
+        expect(site.data["authors"]["Jonathan Archer"].length).to be > 0
       end
     end
   end

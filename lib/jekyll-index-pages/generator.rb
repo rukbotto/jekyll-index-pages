@@ -36,9 +36,10 @@ module JekyllIndexPages
 
             pager = pagination.pager
 
+            label_slug = I18n.transliterate(Jekyll::Utils.slugify(label))
             dir =
               File.join(
-                permalink.sub(":label", Jekyll::Utils.slugify(label)),
+                permalink.sub(":label", label_slug),
                 (pager.current_page > 1) ? pager.current_page.to_s : ""
               )
 
