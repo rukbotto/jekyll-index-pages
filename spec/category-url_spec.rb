@@ -21,7 +21,7 @@ describe JekyllIndexPages::CategoryURL do
   end
 
   context "When no text is provided" do
-    let(:template) { Liquid::Template.parse("{% category_link %}") }
+    let(:template) { Liquid::Template.parse("{% category_url %}") }
 
     describe "CategoryURL.render" do
       it "returns an empty string" do
@@ -32,7 +32,7 @@ describe JekyllIndexPages::CategoryURL do
 
   context "When a valid category name is provided" do
     let(:template) do
-      Liquid::Template.parse("{% category_link Ciencia ficción %}")
+      Liquid::Template.parse("{% category_url Ciencia ficción %}")
     end
 
     describe "CategoryURL.render" do

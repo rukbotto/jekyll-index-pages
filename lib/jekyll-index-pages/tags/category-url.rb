@@ -32,4 +32,4 @@ module JekyllIndexPages
   end
 end
 
-Liquid::Template.register_tag("category_link", JekyllIndexPages::CategoryURL)
+Liquid::Template.register_tag("category_url", JekyllIndexPages::CategoryURL)
