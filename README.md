@@ -123,7 +123,7 @@ custom_name:
   ...
 ```
 
-Beacuse this plugin [transliterates](http://stackoverflow.com/a/20586777) the
+Because this plugin [transliterates](http://stackoverflow.com/a/20586777) the
 URL for generated pages, you need to define a language as follows:
 
 ```yaml
@@ -166,6 +166,26 @@ To include the pagination, you can do the following:
   <a href="{{ pager.next_page_url }}">Next page</a>
   {% endif %}
 {% endif %}
+```
+
+### Linking category and tag pages
+
+Sometimes you will need to link category or tag pages, for example when
+building some kind of navigation. For this particular use case, you can use `{%
+category_url %}` and `{% tag_url %}` tags for getting the correct URL to a
+given category or tag page.
+
+`{% category_url %}` accepts a valid category name as an argument.  Likewise,
+`{% tag_url %}` receives a valid tag name.
+
+The following example demonstrates how to create a basic category navigation:
+
+```liquid
+<ul>
+  {% for category in site.categories %}
+    <li><a href="{% category_url category[0] %}">{{ category[0] }}</a></li>
+  {% endfor%}
+</ul>
 ```
 
 ## Development
