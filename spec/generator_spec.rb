@@ -197,8 +197,8 @@ describe(JekyllIndexPages::Generator) do
     end
 
     describe("Generator.generate") do
-      it("generates two tag index pages") do
-        expect(site.pages.length).to eq(2)
+      it("generates three tag index pages") do
+        expect(site.pages.length).to eq(3)
       end
 
       it("generates a tag index page at /star-trek/") do
