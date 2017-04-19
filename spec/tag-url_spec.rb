@@ -24,20 +24,20 @@ describe JekyllIndexPages::TagURL do
     let(:template) { Liquid::Template.parse("{% tag_url %}") }
 
     describe "TagURL.render" do
-      it "returns an empty string" do
-        expect(template.render(payload, info)).to eq("")
+      it "raises ArgumentError" do
+        expect { template.render!(payload, info) }.to raise_error(ArgumentError)
       end
     end
   end
 
   context "When a valid tag name is provided" do
     let(:template) do
-      Liquid::Template.parse("{% tag_url ciencia-ficción %}")
+      Liquid::Template.parse("{% tag_url \"ciencia-ficción\" %}")
     end
 
     describe "TagURL.render" do
       it "returns a valid tag page URL" do
-        expect(template.render(payload, info)).to eq("/ciencia-ficcion/")
+        expect(template.render!(payload, info)).to eq("/ciencia-ficcion/")
       end
     end
 
@@ -54,7 +54,39 @@ describe JekyllIndexPages::TagURL do
 
       describe "TagURL.render" do
         it "returns a valid tag page URL" do
-          expect(template.render(payload, info)).to eq("/custom/ciencia-ficcion/")
+          expect(template.render!(payload, info)).to eq("/custom/ciencia-ficcion/")
+        end
+      end
+    end
+  end
+
+  context "When a valid tag name is provided as a variable" do
+    let(:template) do
+      Liquid::Template.parse <<-eos
+{% for tag in site.tags %}{% if forloop.last %}{% tag_url tag[0] %}{% endif %}{% endfor %}
+eos
+    end
+
+    describe "TagURL.render" do
+      it "returns a valid tag page URL" do
+        expect(template.render!(payload, info)).to start_with("/ciencia-ficcion/")
+      end
+    end
+
+    context "and a custom tag permalink is provided" do
+      let(:overrides) do
+        {
+          "index_pages" => {
+            "tags" => {
+              "permalink" => "/custom/:label/"
+            }
+          }
+        }
+      end
+
+      describe "TagURL.render" do
+        it "returns a valid tag page URL" do
+          expect(template.render!(payload, info)).to start_with("/custom/ciencia-ficcion/")
         end
       end
     end

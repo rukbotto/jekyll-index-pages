@@ -24,20 +24,20 @@ describe JekyllIndexPages::CategoryURL do
     let(:template) { Liquid::Template.parse("{% category_url %}") }
 
     describe "CategoryURL.render" do
-      it "returns an empty string" do
-        expect(template.render(payload, info)).to eq("")
+      it "raises ArgumentError" do
+        expect { template.render!(payload, info) }.to raise_error(ArgumentError)
       end
     end
   end
 
   context "When a valid category name is provided" do
     let(:template) do
-      Liquid::Template.parse("{% category_url Ciencia ficción %}")
+      Liquid::Template.parse("{% category_url \"Ciencia ficción\" %}")
     end
 
     describe "CategoryURL.render" do
       it "returns a valid category page URL" do
-        expect(template.render(payload, info)).to eq("/ciencia-ficcion/")
+        expect(template.render!(payload, info)).to eq("/ciencia-ficcion/")
       end
     end
 
@@ -54,7 +54,39 @@ describe JekyllIndexPages::CategoryURL do
 
       describe "CategoryURL.render" do
         it "returns a valid category page URL" do
-          expect(template.render(payload, info)).to eq("/custom/ciencia-ficcion/")
+          expect(template.render!(payload, info)).to eq("/custom/ciencia-ficcion/")
+        end
+      end
+    end
+  end
+
+  context "When a valid category name is provided as a variable" do
+    let(:template) do
+      Liquid::Template.parse <<-eos
+{% for category in site.categories %}{% if forloop.last %}{% category_url category[0] %}{% endif %}{% endfor %}
+eos
+    end
+
+    describe "CategoryURL.render" do
+      it "returns a valid category page URL" do
+        expect(template.render!(payload, info)).to start_with("/ciencia-ficcion/")
+      end
+    end
+
+    context "and a custom category permalink is provided" do
+      let(:overrides) do
+        {
+          "index_pages" => {
+            "categories" => {
+              "permalink" => "/custom/:label/"
+            }
+          }
+        }
+      end
+
+      describe "CategoryURL.render" do
+        it "returns a valid category page URL" do
+          expect(template.render!(payload, info)).to start_with("/custom/ciencia-ficcion/")
         end
       end
     end

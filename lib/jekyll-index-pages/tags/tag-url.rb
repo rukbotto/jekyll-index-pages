@@ -1,33 +1,49 @@
 module JekyllIndexPages
   class TagURL < Liquid::Tag
-    def initialize(tag, text, tokens)
+    STRING_SYNTAX = %r{^\"[[:alnum:]\-]+\"$}u
+    VARIABLE_SYNTAX = %r{^\(?[[:alnum:]\-\.\[\]]+\)?$}u
+
+    def initialize(tag, markup, tokens)
       super
-      @text = text.strip
+      @markup = markup.strip
     end
 
     def render(context)
+      if @markup.match(STRING_SYNTAX)
+        @markup.gsub!("\"", "")
+      elsif @markup.match(VARIABLE_SYNTAX)
+        @markup = Liquid::Variable.new(@markup).render(context)
+      else
+        raise ArgumentError, <<-eos
+Invalid syntax for tag_url tag:
+
+  #{@markup}
+
+Valid syntax:
+
+  {% tag_url "Tag name" %}
+
+  or
+
+  {% tag_url name_in_variable %}
+
+eos
+      end
+
       site = context.registers[:site]
 
+      tag, _ = site.tags.detect { |key, value| key == @markup }
+      return "" if !tag
+      tag_slug =
+        I18n.transliterate(
+          Jekyll::Utils.slugify(tag),
+          :locale => I18n.locale
+      )
+
       config = site.config["index_pages"] || {}
-      _, item = config.detect do |key, value|
-        key == "tags"
-      end
-
+      _, item = config.detect { |key, value| key == "tags" }
       permalink = item ? item["permalink"] : "/:label/"
-      tag, _ = site.tags.detect do |key, value|
-        key == @text
-      end
-
-      if tag
-        tag_slug =
-          I18n.transliterate(
-            Jekyll::Utils.slugify(tag),
-            :locale => I18n.locale
-        )
-        permalink.sub(":label", tag_slug)
-      else
-        ""
-      end
+      permalink.sub(":label", tag_slug)
     end
   end
 end
