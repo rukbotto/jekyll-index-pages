@@ -60,16 +60,26 @@ describe JekyllIndexPages::TagURL do
     end
   end
 
-  context "When a valid tag name is provided as a variable" do
+  context "When valid tag names are provided as a variable" do
     let(:template) do
       Liquid::Template.parse <<-eos
-{% for tag in site.tags %}{% if forloop.last %}{% tag_url tag[0] %}{% endif %}{% endfor %}
+{% for tag in site.tags %}
+{% tag_url tag[0] %}
+{% endfor %}
 eos
     end
 
     describe "TagURL.render" do
-      it "returns a valid tag page URL" do
-        expect(template.render!(payload, info)).to start_with("/ciencia-ficcion/")
+      it "returns valid tag page URLs" do
+        expect(template.render!(payload, info)).to eq <<-eos
+
+/star-trek/
+
+/viaje-a-las-estrellas/
+
+/ciencia-ficcion/
+
+eos
       end
     end
 
@@ -85,8 +95,16 @@ eos
       end
 
       describe "TagURL.render" do
-        it "returns a valid tag page URL" do
-          expect(template.render!(payload, info)).to start_with("/custom/ciencia-ficcion/")
+        it "returns valid tag page URLs" do
+          expect(template.render!(payload, info)).to eq <<-eos
+
+/custom/star-trek/
+
+/custom/viaje-a-las-estrellas/
+
+/custom/ciencia-ficcion/
+
+eos
         end
       end
     end

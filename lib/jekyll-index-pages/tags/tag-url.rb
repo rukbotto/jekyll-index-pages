@@ -9,10 +9,11 @@ module JekyllIndexPages
     end
 
     def render(context)
+      input = ""
       if @markup.match(STRING_SYNTAX)
-        @markup.gsub!("\"", "")
+        input = @markup.gsub("\"", "")
       elsif @markup.match(VARIABLE_SYNTAX)
-        @markup = Liquid::Variable.new(@markup).render(context)
+        input = Liquid::Variable.new(@markup).render(context)
       else
         raise ArgumentError, <<-eos
 Invalid syntax for tag_url tag:
@@ -32,7 +33,7 @@ eos
 
       site = context.registers[:site]
 
-      tag, _ = site.tags.detect { |key, value| key == @markup }
+      tag, _ = site.tags.detect { |key, value| key == input }
       return "" if !tag
       tag_slug =
         I18n.transliterate(

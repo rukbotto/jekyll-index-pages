@@ -60,16 +60,24 @@ describe JekyllIndexPages::CategoryURL do
     end
   end
 
-  context "When a valid category name is provided as a variable" do
+  context "When valid category names are provided as a variable" do
     let(:template) do
       Liquid::Template.parse <<-eos
-{% for category in site.categories %}{% if forloop.last %}{% category_url category[0] %}{% endif %}{% endfor %}
+{% for category in site.categories %}
+{% category_url category[0] %}
+{% endfor %}
 eos
     end
 
     describe "CategoryURL.render" do
-      it "returns a valid category page URL" do
-        expect(template.render!(payload, info)).to start_with("/ciencia-ficcion/")
+      it "returns valid category page URLs" do
+        expect(template.render!(payload, info)).to eq <<-eos
+
+/science-fiction/
+
+/ciencia-ficcion/
+
+eos
       end
     end
 
@@ -85,8 +93,14 @@ eos
       end
 
       describe "CategoryURL.render" do
-        it "returns a valid category page URL" do
-          expect(template.render!(payload, info)).to start_with("/custom/ciencia-ficcion/")
+        it "returns valid category page URLs" do
+          expect(template.render!(payload, info)).to eq <<-eos
+
+/custom/science-fiction/
+
+/custom/ciencia-ficcion/
+
+eos
         end
       end
     end
