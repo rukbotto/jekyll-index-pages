@@ -175,8 +175,13 @@ building some kind of navigation. For this particular use case, you can use `{%
 category_url %}` and `{% tag_url %}` tags for getting the correct URL to a
 given category or tag page.
 
-`{% category_url %}` accepts a valid category name as an argument.  Likewise,
-`{% tag_url %}` receives a valid tag name.
+`{% category_url %}` accepts a valid category name as an argument:
+
+```liquid
+<a href="{% category_url "Category name" %}">Category name</a>
+```
+
+Likewise, `{% tag_url %}` receives a valid tag name.
 
 The following example demonstrates how to create a basic category navigation:
 
