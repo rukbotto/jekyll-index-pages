@@ -1,7 +1,7 @@
 module JekyllIndexPages
   class TagURL < URLTag
     def has_kind?(site, kind)
-      site.tags.has_key?(kind)
+      site.tags.key?(kind)
     end
 
     def filter_config(config)

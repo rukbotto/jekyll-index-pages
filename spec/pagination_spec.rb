@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe(JekyllIndexPages::Pagination) do
+describe JekyllIndexPages::Pagination do
   context "When no documents and no results per page are provided" do
     let(:pagination) { JekyllIndexPages::Pagination.new([], 0) }
     let(:pager) { pagination.pager }
