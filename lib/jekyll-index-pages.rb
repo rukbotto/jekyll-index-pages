@@ -11,3 +11,12 @@ require "jekyll-index-pages/tags/archive-url"
 require "jekyll-index-pages/tags/author-url"
 require "jekyll-index-pages/tags/category-url"
 require "jekyll-index-pages/tags/tag-url"
+
+Jekyll::Hooks.register :site, :after_init do |site|
+  if I18n.backend.send(:translations).empty?
+    I18n.backend.load_translations(
+      Dir[File.join(site.in_source_dir(),"_locales/*.yml")]
+    )
+  end
+  I18n.locale = site.config["lang"]
+end

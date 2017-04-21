@@ -2,15 +2,6 @@ module JekyllIndexPages
   class Generator < Jekyll::Generator
     safe true
 
-    Jekyll::Hooks.register :site, :after_init do |site|
-      if I18n.backend.send(:translations).empty?
-        I18n.backend.load_translations(
-          Dir[File.join(site.in_source_dir(),"_locales/*.yml")]
-        )
-      end
-      I18n.locale = site.config["lang"]
-    end
-
     def generate(site)
       config = site.config["index_pages"] || {}
       config.each do |kind, item|
