@@ -168,20 +168,21 @@ To include the pagination, you can do the following:
 {% endif %}
 ```
 
-### Linking category and tag pages
+### Linking index pages
 
-Sometimes you will need to link category or tag pages, for example when
-building some kind of navigation. For this particular use case, you can use `{%
-category_url %}` and `{% tag_url %}` tags for getting the correct URL to a
-given category or tag page.
-
-`{% category_url %}` accepts a valid category name as an argument:
+Sometimes you will need to link index pages, for example when building some
+kind of category navigation. For this particular use case, you can use `{%
+category_url %}`, `{% tag_url %}`, `{% author_url %}` and `{% archive_url %}`
+tags for getting the correct URL to a given index page.
 
 ```liquid
 <a href="{% category_url "Category name" %}">Category name</a>
+<a href="{% tag_url "Tag name" %}">Tag name</a>
+<a href="{% author_url "Author Name" %}">Author Name</a>
+<a href="{% archive_url "2001" %}">2001</a>
 ```
 
-Likewise, `{% tag_url %}` receives a valid tag name.
+You can pass the argument directly as a string or as a variable.
 
 The following example demonstrates how to create a basic category navigation:
 
