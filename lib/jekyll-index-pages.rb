@@ -15,8 +15,11 @@ require "jekyll-index-pages/tags/tag-url"
 Jekyll::Hooks.register :site, :after_init do |site|
   if I18n.backend.send(:translations).empty?
     I18n.backend.load_translations(
-      Dir[File.join(site.in_source_dir(),"_locales/*.yml")]
+      Dir[File.join(site.in_source_dir(), "_locales/*.yml")]
     )
   end
-  I18n.locale = site.config["lang"]
+end
+
+Jekyll::Hooks.register :posts, :post_init do |post|
+  I18n.locale = post.site.config["lang"]
 end
