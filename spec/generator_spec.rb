@@ -45,18 +45,32 @@ describe JekyllIndexPages::Generator do
         expect(site.pages[0].url).to eq("/posts/")
       end
 
+      it "generates a post index page with a pager" do
+        expect(site.pages[0].data["pager"]).to be_instance_of(Hash)
+      end
+
       it "generates a post index page with six documents" do
         expect(site.pages[0].data["pager"]["docs"].length).to eq(6)
       end
 
       it "generates a post index page with recent documents first" do
-        recent_doc = site.pages[0].data["pager"]["docs"][0]
-        older_doc = site.pages[0].data["pager"]["docs"][1]
-        expect(recent_doc.date).to be > older_doc.date
-      end
+        first = site.pages[0].data["pager"]["docs"][0]
+        expect(first.date).to eq(Time.new(2001, 9, 26))
 
-      it "generates a post index page with a pager" do
-        expect(site.pages[0].data["pager"]).to be_instance_of(Hash)
+        second = site.pages[0].data["pager"]["docs"][1]
+        expect(second.date).to eq(Time.new(1995, 1, 16))
+
+        third = site.pages[0].data["pager"]["docs"][2]
+        expect(third.date).to eq(Time.new(1993, 1, 03))
+
+        fourth = site.pages[0].data["pager"]["docs"][3]
+        expect(fourth.date).to eq(Time.new(1987, 9, 28))
+
+        fifth = site.pages[0].data["pager"]["docs"][4]
+        expect(fifth.date).to eq(Time.new(1966, 9, 8))
+
+        sixth = site.pages[0].data["pager"]["docs"][5]
+        expect(sixth.date).to eq(Time.new(1966, 9, 8))
       end
     end
   end
@@ -100,6 +114,14 @@ describe JekyllIndexPages::Generator do
           expect(page.data["pager"]["docs"].length).to eq(2)
         end
 
+        it "sorted by date, recent first" do
+          first = page.data["pager"]["docs"][0]
+          expect(first.date).to eq(Time.new(2001, 9, 26))
+
+          second = page.data["pager"]["docs"][1]
+          expect(second.date).to eq(Time.new(1995, 1, 16))
+        end
+
         it "and next page url only" do
           expect(page.data["pager"]["prev_page_url"]).to eq("")
           expect(page.data["pager"]["next_page_url"]).to eq("/posts/2/")
@@ -108,6 +130,18 @@ describe JekyllIndexPages::Generator do
 
       context "generates the second post index page" do
         let(:page) { site.pages[1] }
+
+        it "with two documents" do
+          expect(page.data["pager"]["docs"].length).to eq(2)
+        end
+
+        it "sorted by date, recent first" do
+          first = page.data["pager"]["docs"][0]
+          expect(first.date).to eq(Time.new(1993, 1, 03))
+
+          second = page.data["pager"]["docs"][1]
+          expect(second.date).to eq(Time.new(1987, 9, 28))
+        end
 
         it "with previous and next page urls" do
           expect(page.data["pager"]["prev_page_url"]).to eq("/posts/")
@@ -267,6 +301,83 @@ describe JekyllIndexPages::Generator do
 
       it "generates the first collection index page at /starships/" do
         expect(site.pages[0].url).to eq("/starships/")
+      end
+
+      it "generates a post index page with four documents" do
+        expect(site.pages[0].data["pager"]["docs"].length).to eq(4)
+      end
+
+      it "generates a post index page with recent documents first" do
+        first = site.pages[0].data["pager"]["docs"][0]
+        expect(first.date).to eq(Time.new(2371, 1, 1))
+
+        second = site.pages[0].data["pager"]["docs"][1]
+        expect(second.date).to eq(Time.new(2363, 1, 1))
+
+        third = site.pages[0].data["pager"]["docs"][2]
+        expect(third.date).to eq(Time.new(2351, 1, 1))
+
+        fourth = site.pages[0].data["pager"]["docs"][3]
+        expect(fourth.date).to eq(Time.new(2245, 1, 1))
+      end
+    end
+  end
+
+  context "When custom 'per page' setting for posts index page is provided" do
+    let(:overrides) do
+      {
+        "collections" => ["starships"],
+        "index_pages" => {
+          "custom" => {
+            "per_page" => 2,
+            "layout" => "custom-layout",
+            "collection" => "starships"
+          }
+        }
+      }
+    end
+
+    describe "Generator.generate" do
+      context "generates the first collection index page" do
+        let(:page) { site.pages[0] }
+
+        it "with two documents" do
+          expect(page.data["pager"]["docs"].length).to eq(2)
+        end
+
+        it "sorted by date, recent first" do
+          first = page.data["pager"]["docs"][0]
+          expect(first.date).to eq(Time.new(2371, 1, 1))
+
+          second = page.data["pager"]["docs"][1]
+          expect(second.date).to eq(Time.new(2363, 1, 1))
+        end
+
+        it "and next page url only" do
+          expect(page.data["pager"]["prev_page_url"]).to eq("")
+          expect(page.data["pager"]["next_page_url"]).to eq("/starships/2/")
+        end
+      end
+
+      context "generates the second collection index page" do
+        let(:page) { site.pages[1] }
+
+        it "with two documents" do
+          expect(page.data["pager"]["docs"].length).to eq(2)
+        end
+
+        it "sorted by date, recent first" do
+          first = page.data["pager"]["docs"][0]
+          expect(first.date).to eq(Time.new(2351, 1, 1))
+
+          second = page.data["pager"]["docs"][1]
+          expect(second.date).to eq(Time.new(2245, 1, 1))
+        end
+
+        it "and previous page url only" do
+          expect(page.data["pager"]["prev_page_url"]).to eq("/starships/")
+          expect(page.data["pager"]["next_page_url"]).to eq("")
+        end
       end
     end
   end
