@@ -26,7 +26,7 @@ module JekyllIndexPages
       self.data["excerpt"] = excerpt.sub(":label", label)
 
       self.data["pager"] = Hash.new
-      self.data["pager"]["docs"] = pager.docs.sort { |x, y| y.date <=> x.date }
+      self.data["pager"]["docs"] = pager.docs
       self.data["pager"]["total_pages"] = pager.total_pages
       self.data["pager"]["current_page"] = pager.current_page
       self.data["pager"]["prev_page"] = pager.prev_page
