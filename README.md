@@ -52,8 +52,11 @@ index_pages:
 
 This will tell the plugin to generate index pages with given title and excerpt,
 using the layout named `_layouts/blog.html`. Each index page will contain up to
-20 posts. First page can be accessed at `/blog/`. Subsequent pages can be
+20 documents. First page can be accessed at `/blog/`. Subsequent pages can be
 accessed at `/blog/<page-num>/`.
+
+> Documents are sorted automatically using document's `date` setting, the
+> first being the most recent.
 
 If you want to generate index pages for categories, add the `categories`
 setting to `index_page` section:
