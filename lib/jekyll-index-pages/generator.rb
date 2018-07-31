@@ -25,7 +25,7 @@ module JekyllIndexPages
           when "authors"
             site.data["authors"]
           else
-            site.data["collectionz"] if collection
+            { collection => site.data["collectionz"][collection] } if collection
           end
 
         doc_group.each do |label, docs|
