@@ -44,4 +44,34 @@ describe JekyllIndexPages::Collection do
       end
     end
   end
+
+  context "When two collections are provided in the configuration" do
+    let(:overrides) do
+      {
+        "collections" => ["starships", "cast"],
+        "index_pages" => {
+          "starship" => {
+            "collection" => "starships"
+          },
+          "cast" => {
+            "collection" => "cast"
+          }
+        }
+      }
+    end
+
+    describe "Collection.generate" do
+      it "generates an index page for each collection" do
+        expect(site.data["collectionz"].length).to eq(2)
+      end
+
+      it "the first having four documents" do
+        expect(site.data["collectionz"]["starships"].length).to eq(4)
+      end
+
+      it "the second having two documents" do
+        expect(site.data["collectionz"]["cast"].length).to eq(2)
+      end
+    end
+  end
 end

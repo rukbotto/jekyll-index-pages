@@ -3,22 +3,16 @@ module JekyllIndexPages
     priority :high
 
     def generate(site)
+      collections = Hash.new { |hash, key| hash[key] = [] }
       config = site.config["index_pages"] || {}
       config.each do |kind, item|
-        case kind
-        when "posts", "categories", "tags", "archive", "authors"
-          next
-        end
+        next if kind.match(/posts|categories|tags|archive|authors/)
         next if !item.has_key?("collection")
-
         coll_name = item["collection"]
-        collections = Hash.new { |hash, key| hash[key] = [] }
-        _, collection = site.collections.detect do |key, value|
-          key == coll_name
-        end
+        collection = site.collections[coll_name]
         collection.docs.each { |doc| collections[coll_name] << doc }
-        site.data["collectionz"] = collections
       end
+      site.data["collectionz"] = collections if config.length > 0
     end
   end
 end
