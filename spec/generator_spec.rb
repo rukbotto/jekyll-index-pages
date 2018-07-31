@@ -323,7 +323,7 @@ describe JekyllIndexPages::Generator do
     end
   end
 
-  context "When custom 'per page' setting for posts index page is provided" do
+  context "When custom 'per page' setting for collection index pages is provided" do
     let(:overrides) do
       {
         "collections" => ["starships"],
@@ -338,7 +338,7 @@ describe JekyllIndexPages::Generator do
     end
 
     describe "Generator.generate" do
-      context "generates the first collection index page" do
+      context "generates the first index page for collection" do
         let(:page) { site.pages[0] }
 
         it "with two documents" do
@@ -359,7 +359,7 @@ describe JekyllIndexPages::Generator do
         end
       end
 
-      context "generates the second collection index page" do
+      context "generates the second index page for collection" do
         let(:page) { site.pages[1] }
 
         it "with two documents" do
@@ -377,6 +377,54 @@ describe JekyllIndexPages::Generator do
         it "and previous page url only" do
           expect(page.data["pager"]["prev_page_url"]).to eq("/starships/")
           expect(page.data["pager"]["next_page_url"]).to eq("")
+        end
+      end
+    end
+  end
+
+  context "When two collections are provided in the configuration" do
+    let(:overrides) do
+      {
+        "collections" => ["starships", "cast"],
+        "index_pages" => {
+          "starship" => {
+            "layout" => "custom-layout",
+            "collection" => "starships"
+          },
+          "cast" => {
+            "layout" => "custom-layout",
+            "collection" => "cast"
+          }
+        }
+      }
+    end
+
+    describe "Generator.generate" do
+      it "generates an index page for each collection" do
+        expect(site.pages.length).to eq(2)
+      end
+
+      context "generates the index page for the first collection" do
+        let(:page) { site.pages[0] }
+
+        it "at /starships/" do
+          expect(page.url).to eq("/starships/")
+        end
+
+        it "and having four documents" do
+          expect(page.data["pager"]["docs"].length).to eq(4)
+        end
+      end
+
+      context "generates the index page for the second collection" do
+        let(:page) { site.pages[1] }
+
+        it "at /cast/" do
+          expect(page.url).to eq("/cast/")
+        end
+
+        it "and having two documents" do
+          expect(page.data["pager"]["docs"].length).to eq(2)
         end
       end
     end
