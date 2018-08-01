@@ -197,6 +197,28 @@ describe JekyllIndexPages::Generator do
     end
   end
 
+  context "When custom data is provided in the configuration for posts index page" do
+    let(:overrides) do
+      {
+        "index_pages" => {
+          "posts" => {
+            "data" => {
+              "custom" => "This is a custom data item"
+            }
+          }
+        }
+      }
+    end
+
+    describe "Generator.generate" do
+      it "generates an index page containing the custom data items" do
+        expect(site.pages.length).to eq(1)
+        expect(site.pages[0].data["custom"]).to eq("This is a custom data item")
+        expect(site.pages[0].content).to include("This is a custom data item")
+      end
+    end
+  end
+
   context "When default configuration for category index pages is provided" do
     let(:overrides) do
       {
