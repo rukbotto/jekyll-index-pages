@@ -47,6 +47,10 @@ describe JekyllIndexPages::IndexPage do
           expect(page.data["excerpt"]).to eq("posts")
         end
 
+        it "with no additional data" do
+          expect(page.data.length).to eq(3)
+        end
+
         it "listing the first two posts" do
           expect(page.data["pager"]["docs"].length).to eq(2)
         end
@@ -96,14 +100,56 @@ describe JekyllIndexPages::IndexPage do
     let(:config) do
       {
         "title" => "Star Trek Index",
-        "excerpt" => "Star Trek Index"
+        "excerpt" => "Star Trek Index",
+        "data" => {
+          "description" => "This is the Star Trek Index"
+        }
       }
     end
 
     describe "IndexPage.initialize" do
-      it "creates the first index page with custom title and excerpt" do
+      it "creates the first index page with the specified title, excerpt and data items" do
         expect(page.data["title"]).to eq("Star Trek Index")
         expect(page.data["excerpt"]).to eq("Star Trek Index")
+        expect(page.data["description"]).to eq("This is the Star Trek Index")
+      end
+    end
+  end
+
+  context "When custom data is not provided as a Hash" do
+    let(:config) do
+      {
+        "title" => "Star Trek Index",
+        "excerpt" => "Star Trek Index",
+        "data" => ["This is custom data item"]
+      }
+    end
+
+    describe "IndexPage.initialize" do
+      it "will not add any custom data to index page" do
+        expect(page.data.length).to eq(3)
+      end
+    end
+  end
+
+  context "When custom data tries to override the page's original data" do
+    let(:config) do
+      {
+        "title" => "Star Trek Index",
+        "excerpt" => "Star Trek Index",
+        "data" => {
+          "title" => "This is another title",
+          "excerpt" => "This is another excerpt",
+          "pager" => nil
+        }
+      }
+    end
+
+    describe "IndexPage.initialize" do
+      it "will preserve the original data" do
+        expect(page.data["title"]).to eq("Star Trek Index")
+        expect(page.data["excerpt"]).to eq("Star Trek Index")
+        expect(page.data["pager"]).to be_instance_of(Hash)
       end
     end
   end

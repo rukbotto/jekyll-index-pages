@@ -2,9 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rukbotto/jekyll-index-pages.svg?branch=master)](https://travis-ci.org/rukbotto/jekyll-index-pages)
 
-Index page generator for Jekyll sites. Generates paginated index pages for blog
-posts, categories and tags. It can also generate a paginated yearly archive,
-author and collection pages.
+Index page generator for Jekyll sites. Generates paginated index pages for blog posts, categories and tags. It can also generate a paginated yearly archive, author and collection pages.
 
 ## Installation
 
@@ -37,8 +35,7 @@ gems:
 
 ### Configuring the plugin
 
-If you want to generate index pages for your blog posts, you can add the
-following settings to your `_config.yml` file:
+If you want to generate index pages for your blog posts, you can add the following settings to your `_config.yml` file:
 
 ```yaml
 index_pages:
@@ -50,16 +47,11 @@ index_pages:
     layout: blog
 ```
 
-This will tell the plugin to generate index pages with given title and excerpt,
-using the layout named `_layouts/blog.html`. Each index page will contain up to
-20 documents. First page can be accessed at `/blog/`. Subsequent pages can be
-accessed at `/blog/<page-num>/`.
+This will tell the plugin to generate index pages with given title and excerpt, using the layout named `_layouts/blog.html`. Each index page will contain up to 20 documents. First page can be accessed at `/blog/`. Subsequent pages can be accessed at `/blog/<page-num>/`.
 
-> Documents are sorted automatically using document's `date` setting, the
-> first being the most recent.
+> Documents are sorted automatically using document's `date` setting, the first being the most recent.
 
-If you want to generate index pages for categories, add the `categories`
-setting to `index_page` section:
+If you want to generate index pages for categories, add the `categories` setting to `index_page` section:
 
 ```yaml
 index_pages:
@@ -110,14 +102,9 @@ permalink: /:label/
 layout: posts|categories|tags|authors|archive
 ```
 
-For categories and tags, `:label` variable refers to the category or tag name.
-For posts, `:label` will always be equal to `posts`. For the archive, `:label`
-refers to any given year. For authors, `:label` is the author name. `:label`
-value is slugified when composing the permalink.
+For categories and tags, `:label` variable refers to the category or tag name.  For posts, `:label` will always be equal to `posts`. For the archive, `:label` refers to any given year. For authors, `:label` is the author name. `:label` value is slugified when composing the permalink.
 
-Default value for layout depends on the type of index page. For collection
-index pages, the default layout is the same as the custon name used to define
-the collection config:
+Default value for layout depends on the type of index page. For collection index pages, the default layout is the same as the custon name used to define the collection config:
 
 ```yaml
 custom_name:
@@ -126,21 +113,35 @@ custom_name:
   ...
 ```
 
-Because this plugin [transliterates](http://stackoverflow.com/a/20586777) the
-URL for generated pages, you need to define a language as follows:
+Because this plugin [transliterates](http://stackoverflow.com/a/20586777) the URL for generated pages, you need to define a language as follows:
 
 ```yaml
 lang: en-US
 ```
 
-Then get the specified locale file from
-https://github.com/svenfuchs/rails-i18n/tree/master/rails/locale and add it to
-the `_locales/` directory inside your site codebase.
+Then get the specified locale file from <https://github.com/svenfuchs/rails-i18n/tree/master/rails/locale> and add it to the `_locales/` directory inside your site codebase.
+
+### Including custom data into templates
+
+To include custom data in the template, you must define a variable in the configuration under the `data` section:
+
+```yaml
+index_pages:
+  posts:
+    layout: blog
+    data:
+      custom: This is a custom data item
+```
+
+In this case, you can print the contents of the `custom` variable in the `_layouts/blog.html` layout like this:
+
+```liquid
+{{ page.custom }}
+```
 
 ### Including documents and pagination into templates
 
-To include the paginated documents in your layouts, you can use the `pager`
-variable as demonstrated next:
+To include the paginated documents in your layouts, you can use the `pager` variable as demonstrated next:
 
 ```liquid
 {% assign pager = page.pager %}
@@ -152,8 +153,7 @@ variable as demonstrated next:
 {% endfor %}
 ```
 
-Each document in `pager.docs` is a Jekyll document, so you can access all its
-variables as normally do when developing a layout.
+Each document in `pager.docs` is a Jekyll document, so you can access all its variables as normally do when developing a layout.
 
 To include the pagination, you can do the following:
 
@@ -173,10 +173,7 @@ To include the pagination, you can do the following:
 
 ### Linking index pages
 
-Sometimes you will need to link index pages, for example when building some
-kind of category navigation. For this particular use case, you can use `{%
-category_url %}`, `{% tag_url %}`, `{% author_url %}` and `{% archive_url %}`
-tags for getting the correct URL to a given index page.
+Sometimes you will need to link index pages, for example when building some kind of category navigation. For this particular use case, you can use `{% category_url %}`, `{% tag_url %}`, `{% author_url %}` and `{% archive_url %}` tags for getting the correct URL to a given index page.
 
 ```liquid
 <a href="{% category_url "Category name" %}">Category name</a>
@@ -199,22 +196,14 @@ The following example demonstrates how to create a basic category navigation:
 
 ## Development
 
-After checking out the repo, run `script/setup` to install dependencies. Then,
-run `rake spec` to run the tests. You can also run `script/console` for an
-interactive prompt that will allow you to experiment.
+After checking out the repo, run `script/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `script/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To
-release a new version, update the version number in `version.rb`, and then run
-`bundle exec rake release`, which will create a git tag for the version, push
-git commits and tags, and push the `.gem` file to
-[rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at
-https://github.com/rukbotto/jekyll-index-pages.
+Bug reports and pull requests are welcome on GitHub at <https://github.com/rukbotto/jekyll-index-pages.>
 
 ## License
 
-The gem is available as open source under the terms of the [MIT
-License](http://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

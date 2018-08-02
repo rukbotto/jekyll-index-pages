@@ -22,6 +22,12 @@ module JekyllIndexPages
       self.process(@name)
       self.read_yaml(File.join(base, layout_dir), layout_name)
 
+      if config.key?("data") and config["data"].is_a?(Hash)
+        config["data"].each do |key, value|
+          self.data[key] = value
+        end
+      end
+
       self.data["title"] = title.sub(":label", label)
       self.data["excerpt"] = excerpt.sub(":label", label)
 
