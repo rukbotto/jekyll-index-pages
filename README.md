@@ -123,7 +123,7 @@ Then get the specified locale file from <https://github.com/svenfuchs/rails-i18n
 
 ### Including custom data into templates
 
-To include custom data in the template, you must define a variable under the `data` label in the configuration:
+To include custom data in the template, you must define a variable in the configuration under the `data` section:
 
 ```yaml
 index_pages:
@@ -133,7 +133,7 @@ index_pages:
       custom: This is a custom data item
 ```
 
-In this case, you can print the contents of `custom` variable in the `_layouts/blog.html` layout like this:
+In this case, you can print the contents of the `custom` variable in the `_layouts/blog.html` layout like this:
 
 ```liquid
 {{ page.custom }}
