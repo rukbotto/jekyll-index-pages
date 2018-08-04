@@ -178,7 +178,7 @@ describe JekyllIndexPages::Generator do
     end
   end
 
-  context "When custom 'layout' setting for posts index page is provided" do
+  context "When a custom layout is provided in posts index page configuration" do
     let(:overrides) do
       {
         "index_pages" => {
@@ -192,7 +192,26 @@ describe JekyllIndexPages::Generator do
     describe "Generator.generate" do
       it "generates a post index page using the custom layout" do
         expect(site.pages.length).to eq(1)
-        expect(site.pages[0].content).to include("Custom Layout")
+        expect(site.pages[0].output).to include("Custom Layout")
+      end
+    end
+  end
+
+  context "When a liquid file is provided as a layout in posts index page configuration" do
+    let(:overrides) do
+      {
+        "index_pages" => {
+          "posts" => {
+            "layout" => "liquid-layout"
+          }
+        }
+      }
+    end
+
+    describe "Generator.generate" do
+      it "generates a post index page using the liquid layout" do
+        expect(site.pages.length).to eq(1)
+        expect(site.pages[0].output).to include("This is a liquid layout")
       end
     end
   end
@@ -202,6 +221,7 @@ describe JekyllIndexPages::Generator do
       {
         "index_pages" => {
           "posts" => {
+            "layout" => "data-layout",
             "data" => {
               "custom" => "This is a custom data item"
             }
@@ -214,7 +234,7 @@ describe JekyllIndexPages::Generator do
       it "generates an index page containing the custom data items" do
         expect(site.pages.length).to eq(1)
         expect(site.pages[0].data["custom"]).to eq("This is a custom data item")
-        expect(site.pages[0].content).to include("This is a custom data item")
+        expect(site.pages[0].output).to include("This is a custom data item")
       end
     end
   end
