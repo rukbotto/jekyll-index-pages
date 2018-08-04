@@ -99,19 +99,11 @@ title: :label
 excerpt: :label
 per_page: 10
 permalink: /:label/
-layout: posts|categories|tags|authors|archive
 ```
 
 For categories and tags, `:label` variable refers to the category or tag name.  For posts, `:label` will always be equal to `posts`. For the archive, `:label` refers to any given year. For authors, `:label` is the author name. `:label` value is slugified when composing the permalink.
 
-Default value for layout depends on the type of index page. For collection index pages, the default layout is the same as the custon name used to define the collection config:
-
-```yaml
-custom_name:
-  layout: custom_name
-  collection: collection_name
-  ...
-```
+> Note there is no default value for layout. You must always specify this setting otherwise pages will be generated blank, with no markup.
 
 Because this plugin [transliterates](http://stackoverflow.com/a/20586777) the URL for generated pages, you need to define a language as follows:
 

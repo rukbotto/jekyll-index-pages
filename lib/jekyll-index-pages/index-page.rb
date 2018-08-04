@@ -1,26 +1,18 @@
 module JekyllIndexPages
   class IndexPage < Jekyll::Page
-    def initialize(site, base, dir, config, label, layout, pager)
+    def initialize(site, base, dir, config, label, pager)
       @site = site
       @base = base
       @dir = dir
-      @name = "index.html"
-
-      layout_dir = "_layouts"
-      layout_name = "#{layout}.html"
-
-      @path =
-        if site.in_theme_dir(base) == base
-          site.in_theme_dir(base, layout_dir, layout_name)
-        else
-          site.in_source_dir(base, layout_dir, layout_name)
-        end
+      @name = "index.md"
 
       title = config["title"] || ":label"
       excerpt = config["excerpt"] || ":label"
 
       self.process(@name)
-      self.read_yaml(File.join(base, layout_dir), layout_name)
+
+      self.content = ""
+      self.data = {}
 
       if config.key?("data") and config["data"].is_a?(Hash)
         config["data"].each do |key, value|
@@ -29,6 +21,7 @@ module JekyllIndexPages
       end
 
       self.data["title"] = title.sub(":label", label)
+      self.data["layout"] = config["layout"]
       self.data["excerpt"] = excerpt.sub(":label", label)
 
       self.data["pager"] = Hash.new
@@ -51,6 +44,8 @@ module JekyllIndexPages
         else
           ""
         end
+
+      Jekyll::Hooks.trigger :pages, :post_init, self
     end
   end
 end
