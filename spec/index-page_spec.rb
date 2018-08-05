@@ -58,7 +58,7 @@ describe JekyllIndexPages::IndexPage do
         end
 
         it "containing pagination data" do
-          expect(page.data["pager"]["total_pages"]).to eq(3)
+          expect(page.data["pager"]["total_pages"]).to eq(4)
           expect(page.data["pager"]["current_page"]).to eq(1)
           expect(page.data["pager"]["prev_page"]).to eq(0)
           expect(page.data["pager"]["next_page"]).to eq(2)
@@ -92,6 +92,19 @@ describe JekyllIndexPages::IndexPage do
 
         it "containing url for prev page only" do
           expect(page.data["pager"]["prev_page_url"]).to eq("/posts/2/")
+          expect(page.data["pager"]["next_page_url"]).to eq("/posts/4/")
+        end
+      end
+
+      context "creates the fourth index page" do
+        let(:dir) { "/posts/4" }
+        let(:pager) do
+          pagination.paginate(3)
+          pagination.pager
+        end
+
+        it "containing url for prev page only" do
+          expect(page.data["pager"]["prev_page_url"]).to eq("/posts/3/")
           expect(page.data["pager"]["next_page_url"]).to eq("")
         end
       end

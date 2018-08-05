@@ -49,8 +49,8 @@ describe JekyllIndexPages::Generator do
         expect(site.pages[0].data["pager"]).to be_instance_of(Hash)
       end
 
-      it "generates a post index page with six documents" do
-        expect(site.pages[0].data["pager"]["docs"].length).to eq(6)
+      it "generates a post index page with seven documents" do
+        expect(site.pages[0].data["pager"]["docs"].length).to eq(7)
       end
 
       it "generates a post index page with recent documents first" do
@@ -67,10 +67,13 @@ describe JekyllIndexPages::Generator do
         expect(fourth.date).to eq(Time.new(1987, 9, 28))
 
         fifth = site.pages[0].data["pager"]["docs"][4]
-        expect(fifth.date).to eq(Time.new(1966, 9, 8))
+        expect(fifth.date).to eq(Time.new(1987, 9, 28))
 
         sixth = site.pages[0].data["pager"]["docs"][5]
         expect(sixth.date).to eq(Time.new(1966, 9, 8))
+
+        seventh = site.pages[0].data["pager"]["docs"][6]
+        expect(seventh.date).to eq(Time.new(1966, 9, 8))
       end
     end
   end
@@ -152,8 +155,38 @@ describe JekyllIndexPages::Generator do
       context "generates the third post index page" do
         let(:page) { site.pages[2] }
 
-        it "with previous page url only" do
+        it "with two documents" do
+          expect(page.data["pager"]["docs"].length).to eq(2)
+        end
+
+        it "sorted by date, recent first" do
+          first = page.data["pager"]["docs"][0]
+          expect(first.date).to eq(Time.new(1987, 9, 28))
+
+          second = page.data["pager"]["docs"][1]
+          expect(second.date).to eq(Time.new(1966, 9, 8))
+        end
+
+        it "with previous and next page urls" do
           expect(page.data["pager"]["prev_page_url"]).to eq("/posts/2/")
+          expect(page.data["pager"]["next_page_url"]).to eq("/posts/4/")
+        end
+      end
+
+      context "generates the fourth post index page" do
+        let(:page) { site.pages[3] }
+
+        it "with one document" do
+          expect(page.data["pager"]["docs"].length).to eq(1)
+        end
+
+        it "sorted by date, recent first" do
+          first = page.data["pager"]["docs"][0]
+          expect(first.date).to eq(Time.new(1966, 9, 8))
+        end
+
+        it "with previous page url only" do
+          expect(page.data["pager"]["prev_page_url"]).to eq("/posts/3/")
           expect(page.data["pager"]["next_page_url"]).to eq("")
         end
       end
